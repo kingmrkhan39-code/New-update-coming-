@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Messaging Server - Advanced Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+/* ========================================
+   MODERN BLUE THEME CSS DESIGN
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(-45deg, #0a0a2e, #16213e, #1a1a4e, #2d3561);
+    background-size: 100% 100%;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    padding: 20px 10px;
+    margin: 0;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(96, 165, 250, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.box {
+    background: linear-gradient(135deg, rgba(22, 33, 62, 0.85) 0%, rgba(45, 53, 97, 0.9) 100%);
+    padding: 35px;
+    border-radius: 12px;
+    margin: 25px auto;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    box-shadow:
+        0 10px 40px 0 rgba(59, 130, 246, 0.3),
+        0 0 0 2px rgba(59, 130, 246, 0.4),
+        inset 0 0 25px rgba(59, 130, 246, 0.1);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    transition: all 0.3s ease;
+    animation: slideInScale 0.5s ease-out backwards;
+    position: relative;
+    overflow: hidden;
+}
+
+.box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.08), transparent);
+    animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+@keyframes slideInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.box:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow:
+        0 15px 50px 0 rgba(59, 130, 246, 0.5),
+        0 0 0 3px rgba(59, 130, 246, 0.6),
+        inset 0 0 30px rgba(59, 130, 246, 0.2);
+}
+
+h1, h2, h3 {
+    color: #60A5FA;
+    text-shadow:
+        0 0 10px rgba(96, 165, 250, 0.8),
+        0 0 20px rgba(96, 165, 250, 0.5),
+        0 0 30px rgba(96, 165, 250, 0.3),
+        2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-top: 0;
+    margin-bottom: 20px;
+    animation: glowPulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+    from {
+        text-shadow:
+            0 0 10px rgba(96, 165, 250, 0.8),
+            0 0 20px rgba(96, 165, 250, 0.5),
+            0 0 30px rgba(96, 165, 250, 0.3);
+    }
+    to {
+        text-shadow:
+            0 0 20px rgba(96, 165, 250, 1),
+            0 0 30px rgba(96, 165, 250, 0.7),
+            0 0 40px rgba(96, 165, 250, 0.5);
+    }
+}
+
+h1 {
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+
+h2 {
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+h3 {
+    font-size: 22px;
+}
+
+input, select, textarea {
+    display: block;
+    margin: 20px auto;
+    padding: 18px 22px;
+    font-size: 17px;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+    border: 2px solid rgba(59, 130, 246, 0.5);
+    background: linear-gradient(145deg, rgba(45, 53, 97, 0.9), rgba(22, 33, 62, 0.9));
+    color: #FFFFFF;
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.3),
+        inset 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    font-family: inherit;
+    animation: fadeIn 0.4s ease-out backwards;
+}
+
+input::placeholder, textarea::placeholder {
+    color: rgba(173, 216, 230, 0.8);
+    font-style: italic;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #3B82F6;
+    background: linear-gradient(145deg, rgba(59, 130, 246, 0.15), rgba(45, 53, 97, 0.95));
+    box-shadow:
+        0 0 20px rgba(59, 130, 246, 0.5),
+        0 0 40px rgba(59, 130, 246, 0.2),
+        inset 0 0 12px rgba(59, 130, 246, 0.1);
+    transform: scale(1.02) translateY(-2px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 🔥 NEW: Radio Button Styles */
+.radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 25px auto;
+    flex-wrap: wrap;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: linear-gradient(145deg, rgba(45, 53, 97, 0.7), rgba(22, 33, 62, 0.7));
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    transition: all 0.3s ease;
+}
+
+.radio-option:hover {
+    border-color: #3B82F6;
+    background: linear-gradient(145deg, rgba(59, 130, 246, 0.15), rgba(45, 53, 97, 0.85));
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+.radio-option input[type="radio"] {
+    width: auto;
+    margin: 0 10px 0 0;
+    cursor: pointer;
+    transform: scale(1.3);
+}
+
+.radio-option label {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: #E0E0E0;
+}
+
+.radio-option input[type="radio"]:checked + label {
+    color: #60A5FA;
+    font-weight: bold;
+}
+
+button {
+    background: linear-gradient(135deg, #3B82F6, #2563EB);
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 19px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 18px 28px;
+    border-radius: 10px;
+    margin: 20px auto;
+    display: block;
+    width: 100%;
+    box-shadow:
+        0 8px 25px rgba(59, 130, 246, 0.4),
+        inset 0 -2px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+button:hover::before {
+    width: 400px;
+    height: 400px;
+}
+
+button:hover:not(:disabled) {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow:
+        0 12px 40px rgba(59, 130, 246, 0.6),
+        0 0 30px rgba(255, 255, 255, 0.4),
+        inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(-2px) scale(1.01);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button.loading {
+    pointer-events: none;
+}
+
+button .fa-spinner {
+    display: none;
+    margin-right: 10px;
+}
+
+button.loading .fa-spinner {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+a {
+    color: #60A5FA;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 17px;
+    display: inline-block;
+    margin: 12px 8px;
+    padding: 15px 28px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3B82F6, #2563EB);
+    border: 2px solid rgba(59, 130, 246, 0.6);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+
+a:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+a:hover {
+    background: linear-gradient(135deg, #2563EB, #1D4ED8);
+    box-shadow:
+        0 10px 30px rgba(59, 130, 246, 0.6),
+        0 0 25px rgba(59, 130, 246, 0.4);
+    transform: translateY(-4px) scale(1.05);
+    color: #FFF;
+    text-shadow: 0 0 12px rgba(59, 130, 246, 0.8);
+}
+
+.session-item, .task-item {
+    background: linear-gradient(145deg, rgba(45, 53, 97, 0.9), rgba(22, 33, 62, 0.85));
+    padding: 22px;
+    border-radius: 12px;
+    margin: 20px 0;
+    border: 2px solid rgba(59, 130, 246, 0.4);
+    text-align: left;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.4),
+        inset 0 2px 5px rgba(59, 130, 246, 0.08);
+    transition: all 0.3s ease;
+    animation: slideInLeft 0.5s ease-out backwards;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.session-item:hover, .task-item:hover {
+    transform: translateY(-6px) translateX(3px);
+    box-shadow:
+        0 12px 45px rgba(59, 130, 246, 0.5),
+        -4px 4px 20px rgba(59, 130, 246, 0.3);
+    border-color: rgba(59, 130, 246, 0.8);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 8px;
+    animation: badgePulse 2s ease-in-out infinite;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        transform: scale(1.04);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.status-connected {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(37, 99, 235, 0.4));
+    color: #60A5FA;
+    border: 2px solid #3B82F6;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+}
+
+.status-disconnected {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(220, 38, 38, 0.4));
+    color: #EF4444;
+    border: 2px solid #EF4444;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+}
+
+.status-running {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(37, 99, 235, 0.4));
+    color: #60A5FA;
+    border: 2px solid #3B82F6;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+}
+
+.status-stopped {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(220, 38, 38, 0.4));
+    color: #EF4444;
+    border: 2px solid #EF4444;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+}
+
+.uptime-display {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(96, 165, 250, 0.3));
+    padding: 18px 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: 2px solid rgba(96, 165, 250, 0.5);
+    font-size: 18px;
+    font-weight: bold;
+    color: #60A5FA;
+    text-shadow: 0 0 10px rgba(96, 165, 250, 0.6);
+    animation: uptimePulse 2s ease-in-out infinite;
+}
+
+@keyframes uptimePulse {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+    }
+}
+
+.nav-links {
+    margin: 25px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    animation: fadeInDown 0.7s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(10,10,46,0.9));
+    backdrop-filter: blur(10px);
+    animation: modalBackdropFadeIn 0.25s ease-out;
+}
+
+@keyframes modalBackdropFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: linear-gradient(145deg, rgba(22, 33, 62, 0.98) 0%, rgba(45, 53, 97, 0.98) 50%, rgba(29, 41, 78, 0.98) 100%);
+    margin: 12% auto;
+    padding: 30px;
+    border: 2px solid rgba(59, 130, 246, 0.6);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 
+        0 20px 60px rgba(59, 130, 246, 0.4),
+        0 0 40px rgba(96, 165, 250, 0.2),
+        inset 0 0 30px rgba(59, 130, 246, 0.1);
+    animation: modalSlideIn 0.35s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.85) translateY(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal-content h2 {
+    color: #60A5FA;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #E0E0E0;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.modal-buttons button {
+    width: auto;
+    min-width: 130px;
+    flex: 1;
+    padding: 14px 20px;
+    font-size: 15px;
+    margin: 0;
+    border-radius: 10px;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: linear-gradient(135deg, #DC2626, #B91C1C);
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 10px 30px rgba(239, 68, 68, 0.7);
+}
+
+.btn-cancel, .btn-back {
+    background: linear-gradient(135deg, #3B82F6, #2563EB);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.btn-cancel:hover:not(:disabled), .btn-back:hover:not(:disabled) {
+    background: linear-gradient(135deg, #2563EB, #1D4ED8);
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.7);
+}
+
+.alert {
+    padding: 18px 25px;
+    border-radius: 10px;
+    margin: 20px 0;
+    font-size: 16px;
+    animation: slideInScale 0.35s ease-out;
+}
+
+.alert-success {
+    background: rgba(59, 130, 246, 0.2);
+    border: 2px solid #3B82F6;
+    color: #60A5FA;
+}
+
+.alert-error {
+    background: rgba(239, 68, 68, 0.2);
+    border: 2px solid #EF4444;
+    color: #EF4444;
+}
+
+.alert-info {
+    background: rgba(96, 165, 250, 0.2);
+    border: 2px solid #60A5FA;
+    color: #60A5FA;
+}
+
+.admin-details-box {
+    background: linear-gradient(145deg, rgba(45, 53, 97, 0.9), rgba(22, 33, 62, 0.85));
+    padding: 18px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border: 2px solid rgba(59, 130, 246, 0.4);
+    text-align: left;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.admin-details-box h3 {
+    color: #60A5FA;
+    font-size: 18px;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.admin-details-box p {
+    font-size: 15px;
+    margin: 8px 0;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.modal-content.large-modal {
+    max-width: 900px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 35px;
+}
+
+.login-links {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex-wrap: wrap;
+}
+
+.new-text {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #4da3ff, #1e5eff);
+    color: white !important;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+    body { font-size: 16px; padding: 10px 8px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    .box { padding: 25px; margin: 18px auto; }
+    input, button, select, textarea { padding: 16px 18px; font-size: 15px; }
+    .modal-content { width: 95%; padding: 25px; }
+    .modal-buttons { flex-direction: column; gap: 10px; }
+    .modal-buttons button { width: 100%; }
+}
+
+@media (max-width: 480px) {
+    body { font-size: 15px; padding: 8px 5px; }
+    h1 { font-size: 24px; }
+    h2 { font-size: 21px; }
+    h3 { font-size: 18px; }
+    .box { padding: 20px; margin: 15px auto; }
+}
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <!-- Content loaded dynamically -->
+    </div>
+
+    <script>
+        let currentUser = null;
+        let isAdmin = false;
+        let uptimeInterval = null;
+        let modalCallbacks = {};
+        let statusUpdateInterval = null;
+        let logsUpdateInterval = null;
+
+        function setButtonLoading(button, isLoading) {
+            if (!button) return;
+            
+            if (isLoading) {
+                button.classList.add('loading');
+                button.disabled = true;
+                let spinner = button.querySelector('.fa-spinner');
+                if (!spinner) {
+                    const originalIcon = button.querySelector('i.fas');
+                    if (originalIcon && !originalIcon.classList.contains('fa-spinner')) {
+                        originalIcon.style.display = 'none';
+                    }
+                    spinner = document.createElement('i');
+                    spinner.className = 'fas fa-spinner fa-spin';
+                    button.prepend(spinner);
+                }
+            } else {
+                button.classList.remove('loading');
+                button.disabled = false;
+                const spinner = button.querySelector('.fa-spinner');
+                if (spinner) {
+                    spinner.remove();
+                }
+                const originalIcon = button.querySelector('i.fas');
+                if (originalIcon) {
+                    originalIcon.style.display = '';
+                }
+            }
+        }
+
+        function init() {
+            checkAuth();
+            loadPage();
+            startUptimeUpdater();
+        }
+
+        function checkAuth() {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'adminToken' && value === 'admin_authenticated') {
+                    isAdmin = true;
+                    return;
+                }
+                if (name === 'sessionToken' && value) {
+                    currentUser = { token: value };
+                    return;
+                }
+            }
+        }
+
+        function loadPage() {
+            const path = window.location.pathname;
+            const params = new URLSearchParams(window.location.search);
+
+            if (path === '/' || path === '/login') {
+                showLoginPage();
+            } else if (path === '/signup') {
+                showSignupPage();
+            } else if (path === '/admin-login') {
+                showAdminLoginPage();
+            } else if (path === '/dashboard') {
+                showDashboard();
+            } else if (path === '/admin-dashboard') {
+                showAdminDashboard();
+            } else if (path === '/session-status') {
+                const sessionId = params.get('sessionId');
+                showSessionStatus(sessionId);
+            } else if (path === '/task-logs') {
+                const sessionId = params.get('sessionId');
+                const taskId = params.get('taskId');
+                showTaskLogs(sessionId, taskId);
+            } else {
+                showLoginPage();
+            }
+        }
+
+        function startUptimeUpdater() {
+            if (uptimeInterval) clearInterval(uptimeInterval);
+            updateUptime();
+            uptimeInterval = setInterval(() => updateUptime(), 30000);
+        }
+
+        function showLoginPage() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="uptime-display" id="uptime">
+                    <i class="fas fa-clock"></i> Server Uptime: Loading...
+                </div>
+                <h1><i class="fas fa-lock"></i> WhatsApp Messaging Server</h1>
+                <div class="box">
+                    <h2>User Login</h2>
+                    <div id="login-alert"></div>
+                    <form onsubmit="handleLogin(event)">
+                        <input type="text" id="username" placeholder="Username" required>
+                        <input type="password" id="password" placeholder="Password" required>
+                        <button type="submit"><i class="fas fa-rocket"></i> Login</button>
+                    </form>
+                    <div class="login-links">
+                        <span class="new-text">New user ?</span>
+                        <a href="/signup" onclick="event.preventDefault(); showSignupPage();" class="action-btn">
+                            <i class="fas fa-user-plus"></i> Sign Up
+                        </a>
+                        <a href="/admin-login" onclick="event.preventDefault(); showAdminLoginPage();" class="action-btn">
+                            <i class="fas fa-user-shield"></i> Admin Login
+                        </a>
+                    </div>
+                </div>
+            `;
+            updateUptime();
+        }
+
+        function showSignupPage() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="uptime-display" id="uptime">
+                    <i class="fas fa-clock"></i> Server Uptime: Loading...
+                </div>
+                <h1><i class="fas fa-user-plus"></i> Create Account</h1>
+                <div class="box">
+                    <h2>User Signup</h2>
+                    <div id="signup-alert"></div>
+                    <form onsubmit="handleSignup(event)">
+                        <input type="text" id="username" placeholder="Username" required>
+                        <input type="email" id="email" placeholder="Email" required>
+                        <input type="password" id="password" placeholder="Password" required>
+                        <button type="submit"><i class="fas fa-rocket"></i> Create Account</button>
+                    </form>
+                    <p style="margin-top: 20px;">Already have an account? <a href="/login" onclick="event.preventDefault(); showLoginPage();" style="display: inline;">Login here</a></p>
+                </div>
+            `;
+            updateUptime();
+        }
+
+        function showAdminLoginPage() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="uptime-display" id="uptime">
+                    <i class="fas fa-clock"></i> Server Uptime: Loading...
+                </div>
+                <h1><i class="fas fa-user-shield"></i> Admin Portal</h1>
+                <div class="box">
+                    <h2>Admin Login</h2>
+                    <div id="admin-login-alert"></div>
+                    <form onsubmit="handleAdminLogin(event)">
+                        <input type="text" id="username" placeholder="Admin Username" required>
+                        <input type="password" id="password" placeholder="Admin Password" required>
+                        <button type="submit"><i class="fas fa-shield-alt"></i> Admin Login</button>
+                    </form>
+                    <p style="margin-top: 20px;"><a href="/login" onclick="event.preventDefault(); showLoginPage();" style="display: inline;"><i class="fas fa-user"></i> User Login</a></p>
+                </div>
+            `;
+            updateUptime();
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const button = event.target.querySelector('button[type="submit"]');
+            setButtonLoading(button, true);
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    window.location.href = data.redirect;
+                } else {
+                    showAlert('login-alert', data.error, 'error');
+                    setButtonLoading(button, false);
+                }
+            } catch (error) {
+                showAlert('login-alert', 'Error: ' + error.message, 'error');
+                setButtonLoading(button, false);
+            }
+        }
+
+        async function handleSignup(event) {
+            event.preventDefault();
+            const button = event.target.querySelector('button[type="submit"]');
+            setButtonLoading(button, true);
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    window.location.href = data.redirect;
+                } else {
+                    showAlert('signup-alert', data.error, 'error');
+                    setButtonLoading(button, false);
+                }
+            } catch (error) {
+                showAlert('signup-alert', 'Error: ' + error.message, 'error');
+                setButtonLoading(button, false);
+            }
+        }
+
+        async function handleAdminLogin(event) {
+            event.preventDefault();
+            const button = event.target.querySelector('button[type="submit"]');
+            setButtonLoading(button, true);
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/admin-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    window.location.href = data.redirect;
+                } else {
+                    showAlert('admin-login-alert', data.error, 'error');
+                    setButtonLoading(button, false);
+                }
+            } catch (error) {
+                showAlert('admin-login-alert', 'Error: ' + error.message, 'error');
+                setButtonLoading(button, false);
+            }
+        }
+
+        async function handleGeneratePairingCode(event) {
+            event.preventDefault();
+            const button = event.target.querySelector('button[type="submit"]');
+            setButtonLoading(button, true);
+            
+            const number = document.getElementById('phone-number').value;
+            
+            try {
+                const response = await fetch('/generate-pairing-code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ number })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('pairing-result').innerHTML = `
+                        <div class="alert alert-success">
+                            <h3><i class="fas fa-key"></i> Your Pairing Code:</h3>
+                            <h1 style="font-size: 48px; letter-spacing: 5px; margin: 20px 0;">${data.code}</h1>
+                            <p><strong>Session ID:</strong> <span style="font-family: monospace;">${data.sessionId}</span></p>
+                            <p>Enter this code in your WhatsApp app to link your account.</p>
+                        </div>
+                    `;
+                    showAlert('pairing-alert', 'Pairing code generated successfully!', 'success');
+                    setTimeout(() => {
+                        loadUserSessions();
+                        loadPhoneNumbers();
+                    }, 2000);
+                } else {
+                    showAlert('pairing-alert', data.error, 'error');
+                }
+                setButtonLoading(button, false);
+            } catch (error) {
+                showAlert('pairing-alert', 'Error: ' + error.message, 'error');
+                setButtonLoading(button, false);
+            }
+        }
+
+        // 🔥 NEW: Function to toggle file input type based on selection
+        function toggleFileInputType() {
+            const sendType = document.querySelector('input[name="sendType"]:checked').value;
+            const fileInput = document.getElementById('messageFile');
+            const fileLabel = document.querySelector('label[for="messageFile"]');
+            
+            if (sendType === 'image') {
+                fileInput.accept = 'image/*';
+                fileInput.setAttribute('placeholder', 'Choose an image file');
+                if (fileLabel) {
+                    fileLabel.textContent = 'Upload Image:';
+                }
+            } else {
+                fileInput.accept = '.txt';
+                fileInput.setAttribute('placeholder', 'Choose a text file with messages');
+                if (fileLabel) {
+                    fileLabel.textContent = 'Upload Message File (.txt):';
+                }
+            }
+        }
+
+        // 🔥 NEW: Modified send function to handle both message and image
+        async function handleSendMessage(event) {
+            event.preventDefault();
+            const button = event.target.querySelector('button[type="submit"]');
+            setButtonLoading(button, true);
+            
+            const sendType = document.querySelector('input[name="sendType"]:checked').value;
+            const formData = new FormData();
+            
+            formData.append('selectedSession', document.getElementById('selected-session-send').value);
+            formData.append('target', document.getElementById('target').value);
+            formData.append('targetType', document.getElementById('targetType').value);
+            formData.append('delaySec', document.getElementById('delaySec').value);
+            formData.append('prefix', document.getElementById('prefix').value);
+            
+            // Choose endpoint based on send type
+            let endpoint = '/send-message';
+            if (sendType === 'image') {
+                formData.append('imageFile', document.getElementById('messageFile').files[0]);
+                endpoint = '/send-image';
+            } else {
+                formData.append('messageFile', document.getElementById('messageFile').files[0]);
+            }
+            
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    window.location.href = data.redirect;
+                } else {
+                    showAlert('send-message-alert', data.error, 'error');
+                    setButtonLoading(button, false);
+                }
+            } catch (error) {
+                showAlert('send-message-alert', 'Error: ' + error.message, 'error');
+                setButtonLoading(button, false);
+            }
+        }
+
+        async function loadUserSessions() {
+            try {
+                const response = await fetch('/api/get-numbers');
+                const numbers = await response.json();
+                
+                const container = document.getElementById('user-sessions');
+                if (!container) return;
+                
+                if (numbers.length === 0) {
+                    container.innerHTML = '<p style="color: #ADD8E6;">No active sessions. Generate a pairing code to start.</p>';
+                    return;
+                }
+                
+                let html = '';
+                numbers.forEach(item => {
+                    item.sessions.forEach(session => {
+                        html += `
+                            <div class="session-item">
+                                <h3><i class="fas fa-mobile-alt"></i> WhatsApp: ${item.number}</h3>
+                                <p><strong>Session ID:</strong> <span style="font-family: monospace; font-size: 14px;">${session.sessionId}</span></p>
+                                <p><strong>Status:</strong> <span class="status-badge ${session.isConnected ? 'status-connected' : 'status-disconnected'}">
+                                    ${session.isConnected ? '<i class="fas fa-check-circle"></i> Connected' : '<i class="fas fa-times-circle"></i> Disconnected'}
+                                </span></p>
+                                <p><strong><i class="fas fa-tasks"></i> Running Tasks:</strong> <span style="color: #60A5FA; font-weight: bold;">${session.runningTasksCount || 0}</span></p>
+                                ${session.createdAtFormatted ? `<p><strong><i class="fas fa-calendar-plus"></i> Created:</strong> ${session.createdAtFormatted}</p>` : ''}
+                                <div style="margin-top: 15px;">
+                                    <a href="#" onclick="event.preventDefault(); showSessionStatus('${session.sessionId}');"><i class="fas fa-chart-line"></i> View Status</a>
+                                    <a href="#" onclick="event.preventDefault(); confirmStopSession('${session.sessionId}');" style="background: linear-gradient(135deg, #EF4444, #DC2626);"><i class="fas fa-stop-circle"></i> Stop Session</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                });
+                
+                container.innerHTML = html;
+            } catch (error) {
+                const container = document.getElementById('user-sessions');
+                if (container) {
+                    container.innerHTML = '<p style="color:#EF4444;">Error: ' + error.message + '</p>';
+                }
+            }
+        }
+
+        async function loadPhoneNumbers() {
+            try {
+                const response = await fetch('/api/get-numbers');
+                const numbers = await response.json();
+                
+                const selectSend = document.getElementById('phone-number-select');
+                const selectGroups = document.getElementById('phone-number-select-groups');
+                
+                if (selectSend) {
+                    selectSend.innerHTML = '<option value="">-- Select Phone Number --</option>';
+                    numbers.forEach(item => {
+                        selectSend.innerHTML += `<option value="${item.number}">${item.number}</option>`;
+                    });
+                }
+                
+                if (selectGroups) {
+                    selectGroups.innerHTML = '<option value="">-- Select Phone Number --</option>';
+                    numbers.forEach(item => {
+                        selectGroups.innerHTML += `<option value="${item.number}">${item.number}</option>`;
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading phone numbers:', error);
+            }
+        }
+
+        async function loadSessionsForSending(phoneNumber) {
+            if (!phoneNumber) {
+                document.getElementById('session-selection-send').classList.add('hidden');
+                document.getElementById('send-message-form').classList.add('hidden');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/get-numbers');
+                const numbers = await response.json();
+                
+                const selectedNumber = numbers.find(item => item.number === phoneNumber);
+                const sessionSelect = document.getElementById('session-select-send');
+                
+                sessionSelect.innerHTML = '<option value="">-- Select Session --</option>';
+                
+                if (selectedNumber && selectedNumber.sessions) {
+                    selectedNumber.sessions.forEach(session => {
+                        const statusText = session.isConnected ? 'Connected' : 'Disconnected';
+                        sessionSelect.innerHTML += `<option value="${session.sessionId}">${session.sessionId} (${statusText})</option>`;
+                    });
+                }
+                
+                document.getElementById('session-selection-send').classList.remove('hidden');
+            } catch (error) {
+                console.error('Error loading sessions:', error);
+            }
+        }
+
+        function showSendForm() {
+            const sessionId = document.getElementById('session-select-send').value;
+            if (sessionId) {
+                document.getElementById('selected-session-send').value = sessionId;
+                document.getElementById('send-message-form').classList.remove('hidden');
+            } else {
+                document.getElementById('send-message-form').classList.add('hidden');
+            }
+        }
+
+        async function loadSessionsForGroups(phoneNumber) {
+            if (!phoneNumber) {
+                document.getElementById('session-selection-groups').classList.add('hidden');
+                document.getElementById('show-groups-button').classList.add('hidden');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/get-numbers');
+                const numbers = await response.json();
+                
+                const selectedNumber = numbers.find(item => item.number === phoneNumber);
+                const sessionSelect = document.getElementById('session-select-groups');
+                
+                sessionSelect.innerHTML = '<option value="">-- Select Session --</option>';
+                
+                if (selectedNumber && selectedNumber.sessions) {
+                    selectedNumber.sessions.forEach(session => {
+                        const statusText = session.isConnected ? 'Connected' : 'Disconnected';
+                        sessionSelect.innerHTML += `<option value="${session.sessionId}">${session.sessionId} (${statusText})</option>`;
+                    });
+                }
+                
+                document.getElementById('session-selection-groups').classList.remove('hidden');
+            } catch (error) {
+                console.error('Error loading sessions for groups:', error);
+            }
+        }
+
+        function enableShowGroupsButton() {
+            const sessionId = document.getElementById('session-select-groups').value;
+            if (sessionId) {
+                document.getElementById('selected-session-groups').value = sessionId;
+                document.getElementById('show-groups-button').classList.remove('hidden');
+            } else {
+                document.getElementById('show-groups-button').classList.add('hidden');
+            }
+        }
+
+        async function showGroups() {
+            const sessionId = document.getElementById('selected-session-groups').value;
+            if (!sessionId) {
+                alert('Please select a session first');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/get-groups?sessionId=${sessionId}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    let groupsHtml = `<h3 style="margin-top: 20px;"><i class="fas fa-users"></i> Groups for ${data.number}</h3>`;
+                    
+                    if (data.groups && data.groups.length > 0) {
+                        groupsHtml += '<div style="max-height: 400px; overflow-y: auto; margin-top: 15px;">';
+                        data.groups.forEach(group => {
+                            groupsHtml += `
+                                <div style="background: rgba(59, 130, 246, 0.1); padding: 12px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #3B82F6;">
+                                    <p><strong>${group.index}. ${group.subject}</strong></p>
+                                    <p style="font-family: monospace; font-size: 13px; color: #ADD8E6;">ID: ${group.groupId}</p>
+                                    <p style="font-size: 14px;"><i class="fas fa-users"></i> ${group.participantsCount} members</p>
+                                    ${group.creation ? `<p style="font-size: 13px; color: #ccc;"><i class="fas fa-calendar"></i> Created: ${group.creation}</p>` : ''}
+                                </div>
+                            `;
+                        });
+                        groupsHtml += '</div>';
+                    } else {
+                        groupsHtml += '<p style="color: #ADD8E6; margin-top: 15px;">No groups found for this session.</p>';
+                    }
+
+                    document.getElementById('groups-list').innerHTML = groupsHtml;
+                } else {
+                    showAlert('groups-alert', data.error, 'error');
+                }
+            } catch (error) {
+                showAlert('groups-alert', 'Error: ' + error.message, 'error');
+            }
+        }
+
+        function showDashboard() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="uptime-display" id="uptime">
+                    <i class="fas fa-clock"></i> Server Uptime: Loading...
+                </div>
+                <h1><i class="fas fa-tachometer-alt"></i> User Dashboard</h1>
+                
+                <div class="box">
+                    <h2><i class="fas fa-key"></i> Generate WhatsApp Pairing Code</h2>
+                    <div id="pairing-alert"></div>
+                    <form onsubmit="handleGeneratePairingCode(event)">
+                        <input type="text" id="phone-number" placeholder="Enter Phone Number with Country Code (e.g., 917XXXXXXXXX)" required>
+                        <button type="submit"><i class="fas fa-mobile-alt"></i> Generate Pairing Code</button>
+                    </form>
+                    <div id="pairing-result"></div>
+                    <a href="#" onclick="logout();"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+
+                <div class="box">
+                    <h2><i class="fas fa-server"></i> Your Active Sessions</h2>
+                    <div id="user-sessions">Loading...</div>
+                </div>
+
+                <div class="box">
+                    <h2><i class="fas fa-paper-plane"></i> Send Messages / Images</h2>
+                    <div id="send-message-alert"></div>
+                    
+                    <select id="phone-number-select" onchange="loadSessionsForSending(this.value)">
+                        <option value="">-- Select Phone Number --</option>
+                    </select>
+                    
+                    <div id="session-selection-send" class="hidden">
+                        <select id="session-select-send" onchange="showSendForm()">
+                            <option value="">-- Select Session --</option>
+                        </select>
+                    </div>
+
+                    <div id="send-message-form" class="hidden">
+                        <form onsubmit="handleSendMessage(event)">
+                            <input type="hidden" id="selected-session-send">
+                            
+                            <h3 style="margin: 25px 0 15px 0; text-align: left;"><i class="fas fa-toggle-on"></i> Choose Type:</h3>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="send-messages" name="sendType" value="message" checked onchange="toggleFileInputType()">
+                                    <label for="send-messages"><i class="fas fa-comments"></i> Message File</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="send-image" name="sendType" value="image" onchange="toggleFileInputType()">
+                                    <label for="send-image"><i class="fas fa-image"></i> Image</label>
+                                </div>
+                            </div>
+
+                            <input type="text" id="target" placeholder="Target Number or Group ID (without @ or @g.us)" required>
+                            <select id="targetType" required>
+                                <option value="">-- Select Target Type --</option>
+                                <option value="individual">Individual</option>
+                                <option value="group">Group</option>
+                            </select>
+                            <input type="number" id="delaySec" placeholder="Delay Between Sends (seconds)" required min="1">
+                            <input type="text" id="prefix" placeholder="Prefix for each message/image (optional)">
+                            <label for="messageFile" style="display: block; text-align: left; margin: 15px 0 5px 0; color: #60A5FA;">Upload Message File (.txt):</label>
+                            <input type="file" id="messageFile" accept=".txt" required>
+                            
+                            <button type="submit"><i class="fas fa-rocket"></i> Start Sending</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <h2><i class="fas fa-users"></i> View Your Groups</h2>
+                    <div id="groups-alert"></div>
+                    
+                    <select id="phone-number-select-groups" onchange="loadSessionsForGroups(this.value)">
+                        <option value="">-- Select Phone Number --</option>
+                    </select>
+                    
+                    <div id="session-selection-groups" class="hidden">
+                        <select id="session-select-groups" onchange="enableShowGroupsButton()">
+                            <option value="">-- Select Session --</option>
+                        </select>
+                    </div>
+                    
+                    <div id="show-groups-button" class="hidden">
+                        <input type="hidden" id="selected-session-groups">
+                        <button onclick="showGroups()" style="max-width: 300px;"><i class="fas fa-search"></i> Show Groups</button>
+                    </div>
+                    
+                    <div id="groups-list"></div>
+                </div>
+            `;
+            
+            updateUptime();
+            loadUserSessions();
+            loadPhoneNumbers();
+        }
+
+        function showAdminDashboard() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="uptime-display" id="uptime">
+                    <i class="fas fa-clock"></i> Server Uptime: Loading...
+                </div>
+                <h1><i class="fas fa-user-shield"></i> Admin Control Panel</h1>
+                
+                <div class="box">
+                    <h2><i class="fas fa-chart-bar"></i> System Statistics</h2>
+                    <div id="system-stats">Loading...</div>
+                    <a href="#" onclick="logout();" style="background: linear-gradient(135deg, #EF4444, #DC2626);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+
+                <div class="box">
+                    <h2><i class="fas fa-server"></i> All Active Sessions</h2>
+                    <button onclick="refreshAdminSessions()" style="max-width: 250px;"><i class="fas fa-sync-alt"></i> Refresh Sessions</button>
+                    <div id="all-sessions">Loading...</div>
+                </div>
+            `;
+            
+            updateUptime();
+            loadAdminStats();
+            loadAllSessions();
+        }
+
+        async function showSessionStatus(sessionId) {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="uptime-display" id="uptime">
+                    <i class="fas fa-clock"></i> Server Uptime: Loading...
+                </div>
+                <h1><i class="fas fa-chart-line"></i> Session Status</h1>
+
+                <div class="box">
+                    <h2><i class="fas fa-info-circle"></i> Session Details</h2>
+                    <div id="session-details">Loading...</div>
+                    <div style="margin-top: 20px;">
+                        <a href="#" onclick="event.preventDefault(); showDashboard();" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <h2><i class="fas fa-tasks"></i> Active Tasks</h2>
+                    <div id="tasks-container">Loading...</div>
+                </div>
+            `;
+            
+            updateUptime();
+            loadSessionDetails(sessionId);
+            startLiveStatusUpdates(sessionId);
+        }
+
+        async function showTaskLogs(sessionId, taskId) {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="uptime-display" id="uptime">
+                    <i class="fas fa-clock"></i> Server Uptime: Loading...
+                </div>
+                <h1><i class="fas fa-terminal"></i> Task Logs</h1>
+
+                <div class="box">
+                    <h2><i class="fas fa-info-circle"></i> Task Details</h2>
+                    <div id="task-details">Loading...</div>
+                    <div style="margin-top: 20px;">
+                        <a href="#" onclick="event.preventDefault(); showSessionStatus('${sessionId}');" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Session</a>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <h2><i class="fas fa-file-alt"></i> Live Logs</h2>
+                    <div id="logs-container">Loading...</div>
+                </div>
+            `;
+            
+            updateUptime();
+            loadTaskDetails(sessionId, taskId);
+            startLiveLogsUpdates(sessionId, taskId);
+        }
+
+        async function loadSessionDetails(sessionId) {
+            try {
+                const response = await fetch(`/api/live-status?sessionId=${sessionId}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    document.getElementById('session-details').innerHTML = '<p style="color:#EF4444;">Error: ' + data.error + '</p>';
+                    return;
+                }
+                
+                document.getElementById('session-details').innerHTML = `
+                    <p><strong>WhatsApp Number:</strong> ${data.number}</p>
+                    <p><strong>Session ID:</strong> <span style="font-family: monospace; font-size: 14px;">${sessionId}</span></p>
+                    <p><strong>Connection Status:</strong> <span class="status-badge ${data.isConnected ? 'status-connected' : 'status-disconnected'}" id="session-connection-status">
+                        ${data.isConnected ? '<i class="fas fa-check-circle"></i> Connected' : '<i class="fas fa-times-circle"></i> Disconnected'}
+                    </span></p>
+                    <p><strong><i class="fas fa-tasks"></i> Total Running Tasks:</strong> <span id="running-tasks-count" style="color: #60A5FA; font-size: 20px; font-weight: bold;">${data.runningTasksCount || 0}</span></p>
+                    ${data.createdAtFormatted ? `<p><strong><i class="fas fa-calendar-plus"></i> Session Created:</strong> ${data.createdAtFormatted}</p>` : ''}
+                `;
+                
+                loadTasksContainer(sessionId, data.tasks);
+            } catch (error) {
+                document.getElementById('session-details').innerHTML = '<p style="color:#EF4444;">Error: ' + error.message + '</p>';
+            }
+        }
+
+        function loadTasksContainer(sessionId, tasks) {
+            const container = document.getElementById('tasks-container');
+            if (!container) return;
+            
+            if (!tasks || tasks.length === 0) {
+                container.innerHTML = '<p style="color: #ADD8E6;">No tasks for this session.</p>';
+                return;
+            }
+            
+            let html = '';
+            tasks.forEach(task => {
+                const taskTypeIcon = task.taskType === 'image' ? 'fa-image' : 'fa-comments';
+                const taskTypeLabel = task.taskType === 'image' ? 'Image Task' : 'Message Task';
+                
+                html += `
+                    <div class="task-item">
+                        <h3><i class="fas ${taskTypeIcon}"></i> ${taskTypeLabel} - Target: ${task.target} (${task.targetType})</h3>
+                        <p><strong>Task ID:</strong> <span style="font-family: monospace; font-size: 14px;">${task.taskId}</span></p>
+                        <p><strong>Status:</strong> <span class="status-badge ${task.isSending ? 'status-running' : 'status-stopped'}" id="status-${task.taskId}">
+                            ${task.isSending ? '<i class="fas fa-sync-alt"></i> Running' : '<i class="fas fa-stop-circle"></i> Stopped'}
+                        </span></p>
+                        ${task.createdAtFormatted ? `<p><strong><i class="fas fa-calendar-plus"></i> Task Created:</strong> ${task.createdAtFormatted}</p>` : ''}
+                        <p><strong>${task.taskType === 'image' ? 'Images' : 'Messages'} Sent:</strong> <span id="messages-${task.taskId}">${task.sentMessages}${task.totalMessages > 0 ? ' / ' + task.totalMessages : ''}</span></p>
+                        ${task.totalMessages > 0 ? `<p><strong>Current Index:</strong> <span id="index-${task.taskId}">${task.currentIndex}</span></p>` : ''}
+                        <div style="margin-top: 15px;">
+                            <a href="#" onclick="event.preventDefault(); showTaskLogs('${sessionId}', '${task.taskId}');"><i class="fas fa-terminal"></i> View Logs</a>
+                            <a href="#" onclick="event.preventDefault(); confirmStopTask('${sessionId}', '${task.taskId}');" style="background: linear-gradient(135deg, #EF4444, #DC2626);"><i class="fas fa-stop-circle"></i> Stop Task</a>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function startLiveStatusUpdates(sessionId) {
+            if (statusUpdateInterval) clearInterval(statusUpdateInterval);
+            
+            statusUpdateInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`/api/live-status?sessionId=${sessionId}`);
+                    const data = await response.json();
+                    
+                    if (data.error) return;
+                    
+                    const connectionElem = document.getElementById('session-connection-status');
+                    if (connectionElem) {
+                        connectionElem.className = data.isConnected ? 'status-badge status-connected' : 'status-badge status-disconnected';
+                        connectionElem.innerHTML = data.isConnected ?
+                            '<i class="fas fa-check-circle"></i> Connected' :
+                            '<i class="fas fa-times-circle"></i> Disconnected';
+                    }
+                    
+                    // 🔥 NEW: Update running tasks count
+                    const runningTasksElem = document.getElementById('running-tasks-count');
+                    if (runningTasksElem) {
+                        runningTasksElem.textContent = data.runningTasksCount || 0;
+                    }
+                    
+                    if (!data.tasks) return;
+                    
+                    data.tasks.forEach(task => {
+                        const statusElem = document.getElementById('status-' + task.taskId);
+                        const messagesElem = document.getElementById('messages-' + task.taskId);
+                        const indexElem = document.getElementById('index-' + task.taskId);
+                        
+                        if (statusElem) {
+                            statusElem.className = task.isSending ? 'status-badge status-running' : 'status-badge status-stopped';
+                            statusElem.innerHTML = task.isSending ?
+                                '<i class="fas fa-sync-alt"></i> Running' :
+                                '<i class="fas fa-stop-circle"></i> Stopped';
+                        }
+                        
+                        if (messagesElem) {
+                            messagesElem.textContent = task.sentMessages + (task.totalMessages > 0 ? ' / ' + task.totalMessages : '');
+                        }
+                        
+                        if (indexElem) {
+                            indexElem.textContent = task.currentIndex;
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error updating status:', error);
+                }
+            }, 5000);
+        }
+
+        async function loadTaskDetails(sessionId, taskId) {
+            try {
+                const response = await fetch(`/api/live-logs?sessionId=${sessionId}&taskId=${taskId}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    document.getElementById('task-details').innerHTML = '<p style="color:#EF4444;">Error: ' + data.error + '</p>';
+                    return;
+                }
+                
+                if (data.taskInfo) {
+                    const taskTypeIcon = data.taskInfo.taskType === 'image' ? 'fa-image' : 'fa-comments';
+                    const taskTypeLabel = data.taskInfo.taskType === 'image' ? 'Image Task' : 'Message Task';
+                    
+                    document.getElementById('task-details').innerHTML = `
+                        <p><strong><i class="fas ${taskTypeIcon}"></i> Task Type:</strong> ${taskTypeLabel}</p>
+                        <p><strong>Task ID:</strong> <span style="font-family: monospace; font-size: 14px;">${taskId}</span></p>
+                        <p><strong>Status:</strong> <span class="status-badge ${data.taskInfo.isSending ? 'status-running' : 'status-stopped'}" id="task-status">
+                            ${data.taskInfo.isSending ? '<i class="fas fa-sync-alt"></i> Running' : '<i class="fas fa-stop-circle"></i> Stopped'}
+                        </span></p>
+                        ${data.taskInfo.createdAtFormatted ? `<p><strong><i class="fas fa-calendar-plus"></i> Task Created:</strong> ${data.taskInfo.createdAtFormatted}</p>` : ''}
+                        <p><strong>${data.taskInfo.taskType === 'image' ? 'Images' : 'Messages'} Sent:</strong> <span id="task-messages">${data.taskInfo.sentMessages}${data.taskInfo.totalMessages > 0 ? ' / ' + data.taskInfo.totalMessages : ''}</span></p>
+                    `;
+                }
+                
+                updateLogsContainer(data.logs);
+            } catch (error) {
+                document.getElementById('task-details').innerHTML = '<p style="color:#EF4444;">Error: ' + error.message + '</p>';
+            }
+        }
+
+        function updateLogsContainer(logs) {
+            const container = document.getElementById('logs-container');
+            if (!container) return;
+            
+            if (!logs || logs.length === 0) {
+                container.innerHTML = '<div style="padding: 18px; background: rgba(59,130,246,0.1); border-radius: 10px; border: 1px solid #3B82F6;"><i class="fas fa-info-circle"></i> No logs available yet. Messages will start sending shortly...</div>';
+                return;
+            }
+            
+            let html = '';
+            logs.forEach(log => {
+                const borderColor = log.type === 'success' ? '#3B82F6' : log.type === 'error' ? '#EF4444' : '#60A5FA';
+                const bgColor = log.type === 'success' ? '59,130,246' : log.type === 'error' ? '239,68,68' : '96,165,250';
+                
+                html += `<div style="margin: 12px 0; padding: 12px; border-radius: 8px; border-left: 4px solid ${borderColor}; background: rgba(${bgColor},0.15); font-family: monospace; font-size: 14px;">`;
+                html += `<div><strong>${log.message}</strong></div>`;
+                html += `<div style="font-size: 13px; margin-top: 6px; color: #E0E0E0;">${log.details}</div>`;
+                html += '</div>';
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function startLiveLogsUpdates(sessionId, taskId) {
+            if (logsUpdateInterval) clearInterval(logsUpdateInterval);
+            
+            logsUpdateInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`/api/live-logs?sessionId=${sessionId}&taskId=${taskId}`);
+                    const data = await response.json();
+                    
+                    if (data.error) return;
+                    
+                    if (data.taskInfo) {
+                        const statusElem = document.getElementById('task-status');
+                        const messagesElem = document.getElementById('task-messages');
+                        
+                        if (statusElem) {
+                            statusElem.className = data.taskInfo.isSending ? 'status-badge status-running' : 'status-badge status-stopped';
+                            statusElem.innerHTML = data.taskInfo.isSending ?
+                                '<i class="fas fa-sync-alt"></i> Running' :
+                                '<i class="fas fa-stop-circle"></i> Stopped';
+                        }
+                        
+                        if (messagesElem) {
+                            messagesElem.textContent = data.taskInfo.sentMessages + (data.taskInfo.totalMessages > 0 ? ' / ' + data.taskInfo.totalMessages : '');
+                        }
+                    }
+                    
+                    if (data.logs) {
+                        updateLogsContainer(data.logs);
+                    }
+                } catch (error) {
+                    console.error('Error updating logs:', error);
+                }
+            }, 5000);
+        }
+
+        async function loadAdminStats() {
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                
+                document.getElementById('system-stats').innerHTML = `
+                    <p><strong><i class="fas fa-server"></i> Total Active Sessions:</strong> ${data.sessions}</p>
+                    <p><strong><i class="fas fa-tasks"></i> Total Tasks:</strong> ${data.tasks}</p>
+                    <p><strong><i class="fas fa-sync-alt"></i> Active Running Tasks:</strong> ${data.activeTasks}</p>
+                    <p><strong><i class="fas fa-memory"></i> Memory Used:</strong> ${data.memory.used} / ${data.memory.total}</p>
+                    <p><strong><i class="fas fa-clock"></i> Server Uptime:</strong> ${data.uptime}</p>
+                `;
+            } catch (error) {
+                document.getElementById('system-stats').innerHTML = '<p style="color:#EF4444;">Error loading stats: ' + error.message + '</p>';
+            }
+        }
+
+        async function loadAllSessions() {
+            try {
+                const response = await fetch('/api/admin/all-sessions');
+                const sessions = await response.json();
+                
+                const container = document.getElementById('all-sessions');
+                
+                if (sessions.length === 0) {
+                    container.innerHTML = '<p style="color: #ADD8E6;">No active sessions in the system.</p>';
+                    return;
+                }
+                
+                let html = '';
+                for (const session of sessions) {
+                    html += `
+                        <div class="session-item">
+                            <h3><i class="fas fa-mobile-alt"></i> WhatsApp: ${session.number}</h3>
+                            <p><strong>Session ID:</strong> <span style="font-family: monospace; font-size: 14px;">${session.sessionId}</span></p>
+                            <p><strong>User:</strong> ${session.username} (${session.userId})</p>
+                            <p><strong>Status:</strong> <span class="status-badge ${session.isConnected ? 'status-connected' : 'status-disconnected'}">
+                                ${session.isConnected ? '<i class="fas fa-check-circle"></i> Connected' : '<i class="fas fa-times-circle"></i> Disconnected'}
+                            </span></p>
+                            ${session.createdAtFormatted ? `<p><strong><i class="fas fa-calendar-plus"></i> Session Created:</strong> ${session.createdAtFormatted}</p>` : ''}
+                            <p><strong>Tasks:</strong> ${session.tasksCount} total (${session.activeTasksCount} running)</p>
+                            <div style="margin-top: 15px;">
+                                <a href="#" onclick="event.preventDefault(); showAdminSessionDetails('${session.sessionId}');"><i class="fas fa-eye"></i> View Details</a>
+                                <a href="#" onclick="event.preventDefault(); confirmAdminDeleteSession('${session.sessionId}');" style="background: linear-gradient(135deg, #EF4444, #DC2626);"><i class="fas fa-trash"></i> Delete Session</a>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                container.innerHTML = html;
+            } catch (error) {
+                document.getElementById('all-sessions').innerHTML = '<p style="color:#EF4444;">Error: ' + error.message + '</p>';
+            }
+        }
+
+        async function showAdminSessionDetails(sessionId) {
+            try {
+                const response = await fetch(`/api/admin/session-details?sessionId=${sessionId}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    return;
+                }
+                
+                let sessionDetailsHtml = `
+                    <div class="admin-details-box">
+                        <h3><i class="fas fa-mobile-alt"></i> Session Details</h3>
+                        <p><strong>Session ID:</strong> <span style="font-family: monospace; font-size: 13px;">${data.sessionId}</span></p>
+                        <p><strong>WhatsApp:</strong> ${data.number}</p>
+                        <p><strong>User:</strong> ${data.username} (${data.userId})</p>
+                        <p><strong>Status:</strong> <span class="status-badge ${data.isConnected ? 'status-connected' : 'status-disconnected'}">
+                            ${data.isConnected ? '<i class="fas fa-check-circle"></i> Connected' : '<i class="fas fa-times-circle"></i> Disconnected'}
+                        </span></p>
+                        ${data.createdAtFormatted ? `<p><strong><i class="fas fa-calendar-plus"></i> Created:</strong> ${data.createdAtFormatted}</p>` : ''}
+                    </div>
+                `;
+                
+                let tasksHeaderHtml = `
+                    <div class="admin-details-box" style="margin-top: 18px;">
+                        <h3><i class="fas fa-tasks"></i> Active Tasks</h3>
+                    </div>
+                `;
+                
+                let tasksHtml = '';
+                if (data.tasks && data.tasks.length > 0) {
+                    data.tasks.forEach(task => {
+                        const taskTypeIcon = task.taskType === 'image' ? 'fa-image' : 'fa-comments';
+                        const taskTypeLabel = task.taskType === 'image' ? 'Image' : 'Message';
+                        
+                        tasksHtml += `
+                            <div class="admin-details-box" style="margin-top: 12px;">
+                                <h3 style="font-size: 16px;"><i class="fas ${taskTypeIcon}"></i> ${taskTypeLabel} - ${task.target} (${task.targetType})</h3>
+                                <p><strong>Task ID:</strong> <span style="font-family: monospace; font-size: 13px;">${task.taskId}</span></p>
+                                <p><strong>Status:</strong> <span class="status-badge ${task.isSending ? 'status-running' : 'status-stopped'}">
+                                    ${task.isSending ? '<i class="fas fa-sync-alt"></i> Running' : '<i class="fas fa-stop-circle"></i> Stopped'}
+                                </span></p>
+                                ${task.createdAtFormatted ? `<p><strong><i class="fas fa-calendar-plus"></i> Created:</strong> ${task.createdAtFormatted}</p>` : ''}
+                                <p><strong>Progress:</strong> ${task.sentMessages}${task.totalMessages > 0 ? ' / ' + task.totalMessages : ''} ${task.taskType === 'image' ? 'images' : 'messages'}</p>
+                                <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <a href="#" onclick="event.preventDefault(); showAdminTaskLogs('${task.taskId}');" style="font-size: 14px; padding: 10px 16px;"><i class="fas fa-terminal"></i> Logs</a>
+                                    <a href="#" onclick="event.preventDefault(); confirmAdminDeleteTask('${sessionId}', '${task.taskId}');" style="background: linear-gradient(135deg, #EF4444, #DC2626); font-size: 14px; padding: 10px 16px;"><i class="fas fa-trash"></i> Delete</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    tasksHtml = '<div class="admin-details-box" style="margin-top: 12px;"><p style="color: #ADD8E6;">No tasks for this session.</p></div>';
+                }
+                
+                const modalContent = sessionDetailsHtml + tasksHeaderHtml + tasksHtml;
+                
+                showModal('Admin Session Details', modalContent, [
+                    { text: 'Close', class: 'btn-cancel', action: closeModal }
+                ], true);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        async function showAdminTaskLogs(taskId) {
+            try {
+                const response = await fetch(`/api/admin/task-logs?taskId=${taskId}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    return;
+                }
+                
+                let logsHtml = '<div style="max-height: 400px; overflow-y: auto; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; text-align: left;">';
+                
+                if (data.logs && data.logs.length > 0) {
+                    data.logs.forEach(log => {
+                        const borderColor = log.type === 'success' ? '#3B82F6' : log.type === 'error' ? '#EF4444' : '#60A5FA';
+                        const bgColor = log.type === 'success' ? '59,130,246' : log.type === 'error' ? '239,68,68' : '96,165,250';
+                        
+                        logsHtml += `<div style="margin: 10px 0; padding: 10px; border-radius: 6px; border-left: 3px solid ${borderColor}; background: rgba(${bgColor},0.1); font-family: monospace; font-size: 13px;">`;
+                        logsHtml += `<div><strong>${log.message}</strong></div>`;
+                        logsHtml += `<div style="font-size: 12px; margin-top: 5px;">${log.details}</div>`;
+                        logsHtml += '</div>';
+                    });
+                } else {
+                    logsHtml += '<p>No logs available for this task.</p>';
+                }
+                
+                logsHtml += '</div>';
+                
+                showModal(`Task Logs - ${taskId}`, logsHtml, [
+                    { text: 'Close', class: 'btn-cancel', action: closeModal }
+                ], true);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        function refreshAdminSessions() {
+            loadAllSessions();
+        }
+
+        function confirmStopSession(sessionId) {
+            showModal(
+                '<i class="fas fa-exclamation-triangle"></i> Confirm Delete Session',
+                `<p style="font-size: 16px; margin: 12px 0;">Are you sure you want to delete this session?</p>
+                <p style="color: #EF4444; margin-top: 12px; font-size: 14px;">
+                    <i class="fas fa-exclamation-triangle"></i> This action cannot be undone. All tasks will be stopped and deleted.
+                </p>`,
+                [
+                    { text: 'Yes, Delete', class: 'btn-danger', action: () => stopSession(sessionId) },
+                    { text: 'Cancel', class: 'btn-cancel', action: closeModal }
+                ]
+            );
+        }
+
+        async function stopSession(sessionId) {
+            closeModal();
+            
+            try {
+                const response = await fetch('/stop-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✅ ' + data.message);
+                    showDashboard();
+                } else {
+                    alert('❌ Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        function confirmStopTask(sessionId, taskId) {
+            showModal(
+                '<i class="fas fa-exclamation-triangle"></i> Confirm Delete Task',
+                `<p style="font-size: 16px; margin: 12px 0;">Are you sure you want to delete this task?</p>
+                <p style="color: #EF4444; margin-top: 12px; font-size: 14px;">
+                    <i class="fas fa-exclamation-triangle"></i> This action cannot be undone. All logs will be permanently deleted.
+                </p>`,
+                [
+                    { text: 'Yes, Delete', class: 'btn-danger', action: () => stopTask(sessionId, taskId) },
+                    { text: 'Cancel', class: 'btn-cancel', action: closeModal }
+                ]
+            );
+        }
+
+        async function stopTask(sessionId, taskId) {
+            closeModal();
+            
+            try {
+                const response = await fetch('/stop-task', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId, taskId })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✅ ' + data.message);
+                    showSessionStatus(sessionId);
+                } else {
+                    alert('❌ Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        function confirmAdminDeleteSession(sessionId) {
+            showModal(
+                '<i class="fas fa-user-shield"></i> Admin: Delete Session',
+                `<p style="font-size: 16px; margin: 12px 0;">Delete this session?</p>
+                <p style="color: #EF4444; margin-top: 12px; font-size: 14px;">
+                    <i class="fas fa-exclamation-triangle"></i> This action cannot be undone.
+                </p>`,
+                [
+                    { text: 'Yes, Delete', class: 'btn-danger', action: () => adminDeleteSession(sessionId) },
+                    { text: 'Cancel', class: 'btn-cancel', action: closeModal }
+                ]
+            );
+        }
+
+        async function adminDeleteSession(sessionId) {
+            closeModal();
+            
+            try {
+                const response = await fetch('/api/admin/delete-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✅ ' + data.message);
+                    loadAllSessions();
+                } else {
+                    alert('❌ Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        function confirmAdminDeleteTask(sessionId, taskId) {
+            showModal(
+                '<i class="fas fa-user-shield"></i> Admin: Delete Task',
+                `<p style="font-size: 16px; margin: 12px 0;">Delete this task?</p>
+                <p style="color: #EF4444; margin-top: 12px; font-size: 14px;">
+                    <i class="fas fa-exclamation-triangle"></i> This action cannot be undone.
+                </p>`,
+                [
+                    { text: 'Yes, Delete', class: 'btn-danger', action: () => adminDeleteTask(sessionId, taskId) },
+                    { text: 'Cancel', class: 'btn-cancel', action: closeModal }
+                ]
+            );
+        }
+
+        async function adminDeleteTask(sessionId, taskId) {
+            closeModal();
+            
+            try {
+                const response = await fetch('/api/admin/delete-task', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId, taskId })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✅ ' + data.message);
+                    showAdminSessionDetails(sessionId);
+                } else {
+                    alert('❌ Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        function showModal(title, content, buttons, isLarge = false) {
+            closeModal();
+            
+            const modal = document.createElement('div');
+            modal.id = 'confirmation-modal';
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            
+            let buttonsHtml = '';
+            buttons.forEach((btn, index) => {
+                const btnId = `modal-btn-${index}`;
+                buttonsHtml += `<button id="${btnId}" class="${btn.class}">${btn.text}</button>`;
+                modalCallbacks[btnId] = btn.action;
+            });
+            
+            const modalContentClass = isLarge ? 'modal-content large-modal' : 'modal-content';
+            
+            modal.innerHTML = `
+                <div class="${modalContentClass}">
+                    <h2>${title}</h2>
+                    ${content}
+                    <div class="modal-buttons">
+                        ${buttonsHtml}
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            buttons.forEach((btn, index) => {
+                const btnId = `modal-btn-${index}`;
+                const btnElement = document.getElementById(btnId);
+                if (btnElement) {
+                    btnElement.addEventListener('click', modalCallbacks[btnId]);
+                }
+            });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('confirmation-modal');
+            if (modal) {
+                Object.keys(modalCallbacks).forEach(btnId => {
+                    const btn = document.getElementById(btnId);
+                    if (btn) {
+                        btn.removeEventListener('click', modalCallbacks[btnId]);
+                    }
+                });
+                modalCallbacks = {};
+                modal.remove();
+            }
+        }
+
+        function showAlert(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            element.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => {
+                    element.innerHTML = '';
+                }, 5000);
+            }
+        }
+
+        async function updateUptime() {
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                const uptimeElement = document.getElementById('uptime');
+                if (uptimeElement) {
+                    uptimeElement.innerHTML = `<i class="fas fa-clock"></i> Server Uptime: ${data.uptime}`;
+                }
+            } catch (error) {
+                console.error('Error fetching uptime:', error);
+                const uptimeElement = document.getElementById('uptime');
+                if (uptimeElement) {
+                    uptimeElement.innerHTML = `<i class="fas fa-clock" style="color: #EF4444;"></i> Server Uptime: Error`;
+                }
+            }
+        }
+
+        function logout() {
+            window.location.href = '/logout';
+        }
+ 
+        window.addEventListener('DOMContentLoaded', init);
+        
+        window.addEventListener('beforeunload', () => {
+            if (statusUpdateInterval) clearInterval(statusUpdateInterval);
+            if (logsUpdateInterval) clearInterval(logsUpdateInterval);
+            if (uptimeInterval) clearInterval(uptimeInterval);
+        });
+    </script>
+</body>
+</html>
